@@ -6,8 +6,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public GameState gameState = GameState.Running;
-    public GameObject bullet;
-    public Transform firePos;
+    public GameObject playerBullet, chickBullet, explosion;
+    public Transform playerFirePos,chickFirePos;
 
     private void Awake()
     {

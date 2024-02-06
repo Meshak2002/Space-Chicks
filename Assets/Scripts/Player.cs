@@ -5,8 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private GameManager gameManager;
-    private Rigidbody2D rb;
-    public  float speed;
+    [SerializeField] private  float speed;
     [SerializeField] private float fireRate=1;
     private bool fireDelay;
     private Vector2 inputMovement;
@@ -15,7 +14,6 @@ public class Player : MonoBehaviour
     {
         gameManager = GameManager.instance;
         SwipeControl.OnSwipeInput += Move;
-        rb = GetComponent<Rigidbody2D>();
     }
     
     void Update()
@@ -40,6 +38,15 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log(collision.gameObject.name);
+        if (!collision.gameObject.CompareTag("Coin") && !collision.gameObject.CompareTag("PBullet"))
+        {
+            EndGame();
+        }
+    }
+
     Vector2 BoundaryCheck(Vector2 input)
     {
         if (transform.position.x > 2.2f)
@@ -60,8 +67,14 @@ public class Player : MonoBehaviour
     IEnumerator Fire()
     {      
         fireDelay = true;
-        Instantiate(GameManager.instance.bullet, GameManager.instance.firePos.position, GameManager.instance.firePos.rotation);
+        Instantiate(gameManager.playerBullet, gameManager.playerFirePos.position, gameManager.playerFirePos.rotation);
         yield return new WaitForSeconds(fireRate);
         fireDelay = false;     
+    }
+
+    public void EndGame()
+    {
+        Instantiate(gameManager.explosion, transform.position, transform.rotation);
+        Destroy(gameObject);
     }
 }
