@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     private bool fireDelay;
     private Vector2 inputMovement;
 
+
     private void Start()
     {
         gameManager = GameManager.instance;
@@ -37,13 +38,12 @@ public class Player : MonoBehaviour
             StartCoroutine(Fire());
         }
     }
-
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(collision.gameObject.name);
-        if (!collision.gameObject.CompareTag("Coin") && !collision.gameObject.CompareTag("PBullet"))
+        
+        if (collision.gameObject.CompareTag("Chick") || collision.gameObject.CompareTag("Asteroid"))
         {
-            EndGame();
+            gameManager.Die(transform);
         }
     }
 
@@ -72,9 +72,6 @@ public class Player : MonoBehaviour
         fireDelay = false;     
     }
 
-    public void EndGame()
-    {
-        Instantiate(gameManager.explosion, transform.position, transform.rotation);
-        Destroy(gameObject);
-    }
+
+    
 }

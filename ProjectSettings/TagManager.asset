@@ -7,6 +7,8 @@ TagManager:
   - Chick
   - PBullet
   - Coin
+  - Piece
+  - Asteroid
   layers:
   - Default
   - TransparentFX
@@ -43,4 +45,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Stack
+    uniqueID: 2285723469
     locked: 0

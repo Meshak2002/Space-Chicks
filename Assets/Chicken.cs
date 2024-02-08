@@ -32,6 +32,8 @@ public class Chicken : MonoBehaviour
         targetDir = BoundaryCheck(targetDir);
         transform.Translate(targetDir*speed*Time.deltaTime);
         StartCoroutine(Fire());
+
+        
     }
 
     Vector2 BoundaryCheck(Vector2 dir)
@@ -58,4 +60,5 @@ public class Chicken : MonoBehaviour
             fireDelay = false;
         }
     }
+
 }

@@ -4,17 +4,34 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] private float speed=20;
+    [SerializeField] private float speed = 20;
+    [SerializeField] private int hitPower = 1;
     [SerializeField] private Vector2 direction = Vector2.right;
+    [SerializeField] private GameObject impactFX;
+    private bool isTriggered;
+    private Health health;
+    private SpriteRenderer spriteRenderer;
 
     private void OnEnable()
     {
-        
+        spriteRenderer = GetComponent<SpriteRenderer>();    
     }
 
     void Start()
     {
 
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag != this.tag && isTriggered == false) {
+            Debug.Log(collision.name);
+            if (collision.transform.TryGetComponent<Health>(out health))
+            {
+                isTriggered = true;
+                Damage();
+            }
+        }
     }
 
     void Update()
@@ -30,6 +47,20 @@ public class Bullet : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    void Damage() {
+        health.TakeDamage(hitPower);
+        Instantiate(impactFX, this.transform);
+        speed = 0;
+        spriteRenderer.enabled = false;
+        StartCoroutine(DelayedDestroy());
+    }
+
+    IEnumerator DelayedDestroy()
+    {
+        yield return new WaitForSeconds(.4f);
+        Destroy(this.gameObject);
     }
 
 }
