@@ -8,8 +8,9 @@ public class Chicken : MonoBehaviour
     private GameManager gameManager;
     [SerializeField] private float speed;
     [SerializeField] private float fireRate = 1;
-    private bool fireDelay;
     [SerializeField] private Vector2 targetDir;
+    [SerializeField] private Transform firePT;
+    private bool fireDelay;
     private int i;
 
     void Start()
@@ -56,7 +57,7 @@ public class Chicken : MonoBehaviour
         {
             fireDelay = true;
             yield return new WaitForSeconds(fireRate);
-            Instantiate(gameManager.chickBullet, gameManager.chickFirePos.position, gameManager.chickFirePos.rotation);
+            Instantiate(gameManager.chickBullet, firePT.position, firePT.rotation);
             fireDelay = false;
         }
     }

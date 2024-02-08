@@ -7,7 +7,8 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public GameState gameState = GameState.Running;
     public GameObject playerBullet, chickBullet, playerExplosion, smokeExplosion , chickExplosion, player;
-    public Transform playerFirePos,chickFirePos;
+    public Transform playerFirePos;
+    public int piecesCollected;
 
     private void Awake()
     {
@@ -41,10 +42,19 @@ public class GameManager : MonoBehaviour
             Instantiate(smokeExplosion, obj.transform.position, obj.transform.rotation);
             Destroy(obj.gameObject);
         }
-        else
+        else if(obj.CompareTag("Chick"))
         {
             Instantiate(chickExplosion, obj.transform.position, obj.transform.rotation);
+            Vector2 chickPos = obj.position;
             Destroy(obj.gameObject);
+            if (LvlSpawnManager.instance!=null)
+            {
+                StartCoroutine(LvlSpawnManager.instance.Reward(chickPos));
+            }
+        }
+        else
+        {
+            return;
         }
     }
 
@@ -52,6 +62,8 @@ public class GameManager : MonoBehaviour
     {
         gameState = GameState.GameOver;
     }
+
+    
 }
 public enum GameState
 {

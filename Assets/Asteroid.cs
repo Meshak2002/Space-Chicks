@@ -15,14 +15,18 @@ public class Asteroid : MonoBehaviour
 
     void Update()
     {
-        if (Vector2.Distance(transform.position, target) > .1f && reached==false)
+        if (target != null)
         {
-            transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.deltaTime);
-            reached = true;
-        }
-        else
-        {
-            transform.Translate(Vector2.down *speed * Time.deltaTime); 
+            float dist = Vector2.Distance(transform.position, target);
+            if (dist > .1f && reached == false)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.deltaTime);
+                reached = true;
+            }
+            else
+            {
+                transform.Translate(Vector2.down * speed * Time.deltaTime);
+            }
         }
     }
 }

@@ -7,23 +7,18 @@ public class Piece : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField] private float speed;
     [SerializeField] private GameObject bone,piece;
-    BoxCollider2D boxCol;
+    private BoxCollider2D boxCol;
 
-    private void OnEnable()
+    private void Awake()
     {
         boxCol = GetComponent<BoxCollider2D>();    
     }
 
-    void Start()
-    {
-        
-    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            LvlSpawnManager.instance.piecesCollected++;
             EatPiece();
         }
     }
@@ -36,6 +31,7 @@ public class Piece : MonoBehaviour
 
     void EatPiece()
     {
+        GameManager.instance.piecesCollected++;
         piece.SetActive(false);
         bone.SetActive(true);
         boxCol.enabled = false;

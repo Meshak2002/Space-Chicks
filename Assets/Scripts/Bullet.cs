@@ -54,13 +54,8 @@ public class Bullet : MonoBehaviour
         Instantiate(impactFX, this.transform);
         speed = 0;
         spriteRenderer.enabled = false;
-        StartCoroutine(DelayedDestroy());
+        Destroy(this.gameObject, .4f);
     }
 
-    IEnumerator DelayedDestroy()
-    {
-        yield return new WaitForSeconds(.4f);
-        Destroy(this.gameObject);
-    }
 
 }
