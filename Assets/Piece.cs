@@ -4,16 +4,21 @@ using UnityEngine;
 
 public class Piece : MonoBehaviour
 {
-    // Start is called before the first frame update
     [SerializeField] private float speed;
     [SerializeField] private GameObject bone,piece;
     private BoxCollider2D boxCol;
+    private float initSpeed;
 
     private void Awake()
     {
-        boxCol = GetComponent<BoxCollider2D>();    
+        boxCol = GetComponent<BoxCollider2D>();
+        initSpeed = speed;
     }
 
+    private void OnEnable()
+    {
+         speed = initSpeed;
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -25,8 +30,12 @@ public class Piece : MonoBehaviour
 
     void Update()
     {
-        transform.Translate(Vector3.down * speed * Time.deltaTime);
-        BoundaryCheck(transform.position);
+        if (GameManager.instance.gameState == GameState.Running)
+        {
+            transform.Translate(Vector3.down * speed * Time.deltaTime);
+            BoundaryCheck();
+        }
+         
     }
 
     void EatPiece()
@@ -38,9 +47,19 @@ public class Piece : MonoBehaviour
         speed *= 2f;
     }
 
-    void BoundaryCheck(Vector2 position)
+    void RestorePiece()
+    {
+        piece.SetActive(true);
+        bone.SetActive(false);
+        boxCol.enabled = true;
+    }
+
+    void BoundaryCheck()
     {
         if (transform.position.y < -4.5f)
-            Destroy(gameObject);
+        {
+            RestorePiece();
+            PoolManager.instance.poolDestroyObj(this.gameObject);
+        }
     }
 }

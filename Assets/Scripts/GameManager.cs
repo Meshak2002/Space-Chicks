@@ -20,15 +20,6 @@ public class GameManager : MonoBehaviour
         instance = this;
     }
 
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
 
     public void Die(Transform obj)
     {
@@ -39,17 +30,19 @@ public class GameManager : MonoBehaviour
             EndGame();
         }else if (obj.CompareTag("Asteroid"))
         {
-            Instantiate(smokeExplosion, obj.transform.position, obj.transform.rotation);
-            Destroy(obj.gameObject);
+            //Instantiate(smokeExplosion, obj.transform.position, obj.transform.rotation);
+            PoolManager.instance.poolInstantiateObj(smokeExplosion,obj.transform.position,obj.transform.rotation, ObjType.VFX);
+            //Destroy(obj.gameObject);
+            PoolManager.instance.poolDestroyObj(obj.gameObject);
         }
         else if(obj.CompareTag("Chick"))
         {
-            Instantiate(chickExplosion, obj.transform.position, obj.transform.rotation);
+            PoolManager.instance.poolInstantiateObj(chickExplosion, obj.transform.position, obj.transform.rotation, ObjType.VFX);
             Vector2 chickPos = obj.position;
-            Destroy(obj.gameObject);
-            if (LvlSpawnManager.instance!=null)
+            PoolManager.instance.poolDestroyObj(obj.gameObject);
+            if (PoolManager.instance!=null)
             {
-                StartCoroutine(LvlSpawnManager.instance.Reward(chickPos));
+                StartCoroutine(PoolManager.instance.Reward(chickPos));
             }
         }
         else

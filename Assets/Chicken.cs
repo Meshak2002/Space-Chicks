@@ -13,6 +13,11 @@ public class Chicken : MonoBehaviour
     private bool fireDelay;
     private int i;
 
+    private void OnEnable()
+    {
+        fireDelay = false;
+    }
+
     void Start()
     {
         gameManager = GameManager.instance;
@@ -30,10 +35,12 @@ public class Chicken : MonoBehaviour
 
     void Update()
     {
-        targetDir = BoundaryCheck(targetDir);
-        transform.Translate(targetDir*speed*Time.deltaTime);
-        StartCoroutine(Fire());
-
+        if (GameManager.instance.gameState == GameState.Running)
+        {
+            targetDir = BoundaryCheck(targetDir);
+            transform.Translate(targetDir * speed * Time.deltaTime);
+            StartCoroutine(Fire());
+        }
         
     }
 
@@ -46,7 +53,10 @@ public class Chicken : MonoBehaviour
             dir = new Vector2(1, -1);
 
         if (transform.position.y < -4.5f)
+        {
             Destroy(gameObject);
+            PoolManager.instance.poolDestroyObj(this.gameObject);
+        }
 
         return dir;
     }
@@ -57,7 +67,8 @@ public class Chicken : MonoBehaviour
         {
             fireDelay = true;
             yield return new WaitForSeconds(fireRate);
-            Instantiate(gameManager.chickBullet, firePT.position, firePT.rotation);
+            //Instantiate(gameManager.chickBullet, firePT.position, firePT.rotation);
+            PoolManager.instance.poolInstantiateObj(gameManager.chickBullet, firePT.position, firePT.rotation, ObjType.Bullet);
             fireDelay = false;
         }
     }

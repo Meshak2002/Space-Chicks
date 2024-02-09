@@ -20,9 +20,12 @@ public class BG_Scroller : MonoBehaviour
 
     void Update()
     {
-        if( rImg != null )
+        if (GameManager.instance.gameState == GameState.Running)
         {
-            rImg.uvRect = new Rect(rImg.uvRect.position + movVelocity * Time.deltaTime, rImg.uvRect.size);
+            if (rImg != null)
+            {
+                rImg.uvRect = new Rect(rImg.uvRect.position + movVelocity * Time.deltaTime, rImg.uvRect.size);
+            }
         }
     }
 }

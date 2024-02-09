@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
     private GameManager gameManager;
     [SerializeField] private  float speed;
     [SerializeField] private float fireRate=1;
-    private bool fireDelay;
+    [SerializeField] private bool fireDelay;
     private Vector2 inputMovement;
 
 
@@ -67,7 +67,8 @@ public class Player : MonoBehaviour
     IEnumerator Fire()
     {      
         fireDelay = true;
-        Instantiate(gameManager.playerBullet, gameManager.playerFirePos.position, gameManager.playerFirePos.rotation);
+        //Instantiate(gameManager.playerBullet, gameManager.playerFirePos.position, gameManager.playerFirePos.rotation);
+        PoolManager.instance.poolInstantiateObj(gameManager.playerBullet, gameManager.playerFirePos.position, gameManager.playerFirePos.rotation, ObjType.Bullet);
         yield return new WaitForSeconds(fireRate);
         fireDelay = false;     
     }

@@ -15,18 +15,30 @@ public class Asteroid : MonoBehaviour
 
     void Update()
     {
-        if (target != null)
+        if (GameManager.instance.gameState == GameState.Running)
         {
-            float dist = Vector2.Distance(transform.position, target);
-            if (dist > .1f && reached == false)
+            if (target != null)
             {
-                transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.deltaTime);
-                reached = true;
+                float dist = Vector2.Distance(transform.position, target);
+                if (dist > .1f && reached == false)
+                {
+                    transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.deltaTime);
+                    reached = true;
+                }
+                else
+                {
+                    transform.Translate(Vector2.down * speed * Time.deltaTime);
+                    BoundaryCheck();
+                }
             }
-            else
-            {
-                transform.Translate(Vector2.down * speed * Time.deltaTime);
-            }
+        }
+    }
+
+    void BoundaryCheck()
+    {
+        if (transform.position.y < -4.5f)
+        {
+            PoolManager.instance.poolDestroyObj(this.gameObject);
         }
     }
 }
