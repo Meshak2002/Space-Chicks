@@ -25,7 +25,8 @@ public class GameManager : MonoBehaviour
     {
         if (obj.CompareTag("Player"))
         {
-            Instantiate(playerExplosion, obj.transform.position, obj.transform.rotation);
+            //Instantiate(playerExplosion, obj.transform.position, obj.transform.rotation);
+            PoolManager.instance.poolInstantiateObj(playerExplosion, obj.transform.position, obj.transform.rotation);
             Destroy(obj.gameObject);
             EndGame();
         }else if (obj.CompareTag("Asteroid"))
@@ -53,9 +54,15 @@ public class GameManager : MonoBehaviour
 
     public void EndGame()
     {
-        gameState = GameState.GameOver;
+        gameState = GameState.Paused;
+        StartCoroutine(wait(1f));
     }
 
+    IEnumerator wait(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        UiManager.instance.EndGame();
+    }
     
 }
 public enum GameState

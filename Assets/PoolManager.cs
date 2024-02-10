@@ -7,7 +7,7 @@ public class PoolManager : MonoBehaviour
     [SerializeField] private GameObject piece, chick, asteroid;
     [SerializeField] private float pieceSpawnRate, chickSpawnRate, asterSpawnRate;
     [SerializeField] public List<PoolObject> poolList = new List<PoolObject>();
-    private bool piecePause, chickPause, asterPause;
+    private bool piecePause, chickPause, asterPause, spawnPause;
 
     private Transform[] spawnPts;
     private Transform targetSpawnPt;
@@ -30,13 +30,7 @@ public class PoolManager : MonoBehaviour
 
     void Start()
     {
-        targetSpawnPt = spawnPts[Random.Range(0, spawnPts.Length)];
-        if (piece != null)
-            StartCoroutine(GeneratePieces());
-        if (chick != null)
-            StartCoroutine(GenerateChicks());
-        if(asteroid != null)
-            StartCoroutine(GenerateAsteroid());
+        StartSpawning();
     }
 
     private void Update()
@@ -44,7 +38,24 @@ public class PoolManager : MonoBehaviour
         if (GameManager.instance.gameState == GameState.Paused || GameManager.instance.gameState == GameState.GameOver)
         {
             StopAllCoroutines();
+            spawnPause = true;
         }
+        else if(GameManager.instance.gameState == GameState.Running && spawnPause)
+        {
+            StartSpawning();
+        }
+    }
+
+    void StartSpawning()
+    {
+        spawnPause = false;
+        targetSpawnPt = spawnPts[Random.Range(0, spawnPts.Length)];
+        if (piece != null)
+            StartCoroutine(GeneratePieces());
+        if (chick != null)
+            StartCoroutine(GenerateChicks());
+        if (asteroid != null)
+            StartCoroutine(GenerateAsteroid());
     }
 
     void createPoolParents()

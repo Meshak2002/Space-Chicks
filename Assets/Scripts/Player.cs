@@ -11,12 +11,16 @@ public class Player : MonoBehaviour
     private Vector2 inputMovement;
 
 
-    private void Start()
+    private void Awake()
     {
         gameManager = GameManager.instance;
+    }
+
+    private void Start()
+    {
         SwipeControl.OnSwipeInput += Move;
     }
-    
+
     void Update()
     {
         if (gameManager != null)
@@ -49,16 +53,16 @@ public class Player : MonoBehaviour
 
     Vector2 BoundaryCheck(Vector2 input)
     {
-        if (transform.position.x > 2.2f)
+        if (this.transform.position.x > 2.2f)
             input.x = input.x > 0 ? 0 : input.x;
 
-        if (transform.position.x < -2.2f)
+        if (this.transform.position.x < -2.2f)
             input.x = input.x > 0 ? input.x : 0;
 
-        if (transform.position.y > 3)
+        if (this.transform.position.y > 3)
             input.y = input.y > 0 ? 0 : input.y;
 
-        if (transform.position.y < -4.5f)
+        if (this.transform.position.y < -4.5f)
             input.y = input.y > 0 ? input.y : 0;
 
         return input;
@@ -73,6 +77,10 @@ public class Player : MonoBehaviour
         fireDelay = false;     
     }
 
+    private void OnDestroy()
+    {
+        SwipeControl.OnSwipeInput -= Move;
+    }
 
-    
+
 }
