@@ -8,6 +8,7 @@ public class Piece : MonoBehaviour
     [SerializeField] private GameObject bone,piece;
     private BoxCollider2D boxCol;
     private float initSpeed;
+    private bool isEaten;
 
     private void Awake()
     {
@@ -30,12 +31,18 @@ public class Piece : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.instance.gameState == GameState.Running)
+        if (GameManager.instance.gameState != GameState.Running)
+            return;
+
+        BoundaryCheck();
+        if (GameManager.instance.magnetOn && isEaten==false)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, GameManager.instance.player.transform.position , speed * Time.deltaTime);
+        }
+        else
         {
             transform.Translate(Vector3.down * speed * Time.deltaTime);
-            BoundaryCheck();
         }
-         
     }
 
     void EatPiece()
@@ -45,12 +52,14 @@ public class Piece : MonoBehaviour
         bone.SetActive(true);
         boxCol.enabled = false;
         speed *= 2f;
+        isEaten = true;
     }
 
     void RestorePiece()
     {
         piece.SetActive(true);
         bone.SetActive(false);
+        isEaten = false;
         boxCol.enabled = true;
     }
 

@@ -7,6 +7,9 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public GameState gameState = GameState.Running;
     public GameObject playerBullet, chickBullet, playerExplosion, smokeExplosion , chickExplosion, player;
+    public GameObject magnet, shield;
+    public GameObject power;
+    public bool magnetOn, shieldOn;
     public Transform playerFirePos;
     public int piecesCollected;
 
@@ -25,15 +28,13 @@ public class GameManager : MonoBehaviour
     {
         if (obj.CompareTag("Player"))
         {
-            //Instantiate(playerExplosion, obj.transform.position, obj.transform.rotation);
             PoolManager.instance.poolInstantiateObj(playerExplosion, obj.transform.position, obj.transform.rotation);
             Destroy(obj.gameObject);
             EndGame();
         }else if (obj.CompareTag("Asteroid"))
         {
-            //Instantiate(smokeExplosion, obj.transform.position, obj.transform.rotation);
             PoolManager.instance.poolInstantiateObj(smokeExplosion,obj.transform.position,obj.transform.rotation, ObjType.VFX);
-            //Destroy(obj.gameObject);
+            PoolManager.instance.poolInstantiateObj(shield, obj.transform.position,obj.transform.rotation, ObjType.VFX);
             PoolManager.instance.poolDestroyObj(obj.gameObject);
         }
         else if(obj.CompareTag("Chick"))

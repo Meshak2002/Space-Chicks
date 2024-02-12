@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5166575688515615987}
   m_Layer: 0
   m_Name: P'Bullet-1
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -159,3 +159,5 @@ MonoBehaviour:
   hitPower: 1
   direction: {x: 1, y: 0}
   impactFX: {fileID: 8025222753515358892, guid: e18e85bfe1881f743a6e475d90caee1b, type: 3}
+  impactInstance: {fileID: 0}
+  bulletOwner: 1

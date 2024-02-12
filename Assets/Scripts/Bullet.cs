@@ -11,8 +11,9 @@ public class Bullet : MonoBehaviour
     private bool isTriggered;
     private Health health;
     private SpriteRenderer spriteRenderer;
-    private GameObject impactInstance;
+    [SerializeField]private GameObject impactInstance;
     private float initSpeed;
+    public owner bulletOwner;
 
     private void Awake()
     {
@@ -30,11 +31,24 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag != this.tag && isTriggered == false) {
-            if (collision.transform.TryGetComponent<Health>(out health))
+        if (collision.tag!=bulletOwner.ToString() && isTriggered == false)
+        {
+          
+
+            if (collision.gameObject.CompareTag("Player") && GameManager.instance.shieldOn)
             {
                 isTriggered = true;
+                HitEffect();
+                Debug.Log("Pealthh");
+                return;
+            }
+
+            if (collision.transform.TryGetComponent<Health>(out health))
+            {
+                Debug.Log(collision.transform.name+"  "+this.gameObject.name);
+                isTriggered = true;
                 Damage();
+                HitEffect();
             }
         }
     }
@@ -52,18 +66,19 @@ public class Bullet : MonoBehaviour
     {
         if (transform.position.y > 6 || transform.position.y < -6)
         {
-            //Destroy(gameObject);
             PoolManager.instance.poolDestroyObj(gameObject);
         }
     }
 
     void Damage() {
         health.TakeDamage(hitPower);
-        //Instantiate(impactFX, transform.position,transform.rotation);
+    }
+
+    void HitEffect()
+    {
         impactInstance = PoolManager.instance.poolInstantiateObj(impactFX, transform.position, transform.rotation, ObjType.VFX);
         speed = 0;
         spriteRenderer.enabled = false;
-        //Destroy(this.gameObject, .4f);
         StartCoroutine(Delay(.4f));
     }
 
@@ -72,7 +87,15 @@ public class Bullet : MonoBehaviour
         yield return new WaitForSeconds(delay);
         PoolManager.instance.poolDestroyObj(impactInstance);
         PoolManager.instance.poolDestroyObj(gameObject);
+
+        Debug.Log("Delay");
     }
+        
 
+}
 
+public enum owner
+{
+    Chick,
+    Player
 }

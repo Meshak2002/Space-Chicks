@@ -13,11 +13,12 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        gameManager = GameManager.instance;
+        
     }
 
     private void Start()
     {
+        gameManager = GameManager.instance;
         SwipeControl.OnSwipeInput += Move;
     }
 
@@ -44,6 +45,11 @@ public class Player : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (gameManager.shieldOn)
+        {
+            gameManager.Die(collision.transform);
+            return;
+        }
         
         if (collision.gameObject.CompareTag("Chick") || collision.gameObject.CompareTag("Asteroid"))
         {
@@ -72,7 +78,8 @@ public class Player : MonoBehaviour
     {      
         fireDelay = true;
         //Instantiate(gameManager.playerBullet, gameManager.playerFirePos.position, gameManager.playerFirePos.rotation);
-        PoolManager.instance.poolInstantiateObj(gameManager.playerBullet, gameManager.playerFirePos.position, gameManager.playerFirePos.rotation, ObjType.Bullet);
+        if(PoolManager.instance != null)
+            PoolManager.instance.poolInstantiateObj(gameManager.playerBullet, gameManager.playerFirePos.position, gameManager.playerFirePos.rotation, ObjType.Bullet);
         yield return new WaitForSeconds(fireRate);
         fireDelay = false;     
     }
