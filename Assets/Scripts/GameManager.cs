@@ -7,9 +7,9 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public GameState gameState = GameState.Running;
     public GameObject playerBullet, chickBullet, playerExplosion, smokeExplosion , chickExplosion, player;
-    public GameObject magnet, shield;
+    public GameObject magnet, shield, doubleGun;
     public GameObject power;
-    public bool magnetOn, shieldOn;
+    public bool magnetOn, shieldOn, doubleGunOn;
     public Transform playerFirePos;
     public int piecesCollected;
 
@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
         }else if (obj.CompareTag("Asteroid"))
         {
             PoolManager.instance.poolInstantiateObj(smokeExplosion,obj.transform.position,obj.transform.rotation, ObjType.VFX);
-            PoolManager.instance.poolInstantiateObj(shield, obj.transform.position,obj.transform.rotation, ObjType.VFX);
+            PoolManager.instance.poolInstantiateObj(doubleGun, obj.transform.position,obj.transform.rotation, ObjType.VFX);
             PoolManager.instance.poolDestroyObj(obj.gameObject);
         }
         else if(obj.CompareTag("Chick"))

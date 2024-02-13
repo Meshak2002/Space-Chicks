@@ -40,7 +40,15 @@ public class Player : MonoBehaviour
         transform.Translate(inputMovement * speed * Time.deltaTime);
         if (fireDelay == false)
         {
-            StartCoroutine(Fire());
+            if (GameManager.instance.doubleGunOn)
+            {
+                StartCoroutine(Fire(gameManager.playerFirePos.GetChild(0)));
+                StartCoroutine(Fire(gameManager.playerFirePos.GetChild(1)));
+            }
+            else
+            {
+                StartCoroutine(Fire(gameManager.playerFirePos));
+            }
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -74,12 +82,11 @@ public class Player : MonoBehaviour
         return input;
     }
 
-    IEnumerator Fire()
+    IEnumerator Fire(Transform target)
     {      
         fireDelay = true;
-        //Instantiate(gameManager.playerBullet, gameManager.playerFirePos.position, gameManager.playerFirePos.rotation);
         if(PoolManager.instance != null)
-            PoolManager.instance.poolInstantiateObj(gameManager.playerBullet, gameManager.playerFirePos.position, gameManager.playerFirePos.rotation, ObjType.Bullet);
+            PoolManager.instance.poolInstantiateObj(gameManager.playerBullet, target.position, target.rotation, ObjType.Bullet);
         yield return new WaitForSeconds(fireRate);
         fireDelay = false;     
     }

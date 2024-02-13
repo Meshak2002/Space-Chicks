@@ -5,9 +5,9 @@ using UnityEngine;
 public class PoolManager : MonoBehaviour
 {
     [SerializeField] private GameObject piece, chick, asteroid;
-    [SerializeField] private float pieceSpawnRate, chickSpawnRate, asterSpawnRate;
+    [SerializeField] private float pieceSpawnRate, chickSpawnRate, asterSpawnRate, magnetSpawnRate, shieldSpawnRate;
     [SerializeField] public List<PoolObject> poolList = new List<PoolObject>();
-    private bool piecePause, chickPause, asterPause, spawnPause;
+    private bool piecePause, chickPause, asterPause, magnetPause, shieldPause, spawnPause;
 
     private Transform[] spawnPts;
     private Transform targetSpawnPt;
@@ -56,6 +56,10 @@ public class PoolManager : MonoBehaviour
             StartCoroutine(GenerateChicks());
         if (asteroid != null)
             StartCoroutine(GenerateAsteroid());
+        if (GameManager.instance.magnet)
+            StartCoroutine(GenerateMagnet());
+        if (GameManager.instance.shield) 
+            StartCoroutine (GenerateShield());
     }
 
     void createPoolParents()
@@ -100,6 +104,26 @@ public class PoolManager : MonoBehaviour
         {
             yield return new WaitForSeconds(asterSpawnRate);
             poolInstantiateObj(asteroid, targetSpawnPt.position, Quaternion.identity, ObjType.Asteroid);
+            targetSpawnPt = spawnPts[Random.Range(0, spawnPts.Length)];
+        }
+    }
+
+    IEnumerator GenerateMagnet()
+    {
+        while (magnetPause == false)
+        {
+            yield return new WaitForSeconds(magnetSpawnRate);
+            poolInstantiateObj(GameManager.instance.magnet, targetSpawnPt.position, Quaternion.identity, ObjType.Asteroid);
+            targetSpawnPt = spawnPts[Random.Range(0, spawnPts.Length)];
+        }
+    }
+
+    IEnumerator GenerateShield()
+    {
+        while (shieldPause == false)
+        {
+            yield return new WaitForSeconds(shieldSpawnRate);
+            poolInstantiateObj(GameManager.instance.shield, targetSpawnPt.position, Quaternion.identity, ObjType.Asteroid);
             targetSpawnPt = spawnPts[Random.Range(0, spawnPts.Length)];
         }
     }
