@@ -5,15 +5,20 @@ using UnityEngine;
 public class PoolManager : MonoBehaviour
 {
     [SerializeField] private GameObject piece, chick, asteroid;
-    [SerializeField] private float pieceSpawnRate, chickSpawnRate, asterSpawnRate, magnetSpawnRate, shieldSpawnRate;
+    [SerializeField] private float pieceSpawnRate, chickSpawnRate, asterSpawnRate, powerSpawnRate;
     [SerializeField] public List<PoolObject> poolList = new List<PoolObject>();
-    private bool piecePause, chickPause, asterPause, magnetPause, shieldPause, spawnPause;
+    private bool piecePause, chickPause, asterPause, powerPause, spawnPause;
+    private float timer,startTime,minute=60;
+    [HideInInspector] public int level=1, random;
 
     private Transform[] spawnPts;
     private Transform targetSpawnPt;
     public static PoolManager instance;
 
     private GameObject bulletPool, chickPool, asteroidPool, piecePool, vfxPool, poolObjects;
+
+    public delegate void SpeedIncreaser();
+    public event SpeedIncreaser IncreaseSpeed;
 
     private void Awake()
     {
@@ -31,10 +36,13 @@ public class PoolManager : MonoBehaviour
     void Start()
     {
         StartSpawning();
+        startTime = Time.time;
     }
 
     private void Update()
     {
+        LevelUpgrader();
+
         if (GameManager.instance.gameState == GameState.Paused || GameManager.instance.gameState == GameState.GameOver)
         {
             StopAllCoroutines();
@@ -44,6 +52,28 @@ public class PoolManager : MonoBehaviour
         {
             StartSpawning();
         }
+    }
+
+    void LevelUpgrader()
+    {
+        timer = Time.time - startTime;
+        if (timer / minute >= 1)
+        {
+            if (level < 4)
+            {
+                minute *= 1.6f;
+                level++;
+                IncreaseSpeed?.Invoke();
+                IncreseSpawnRate();
+                Debug.Log("level" +level);
+            }
+        }
+    }
+
+    void IncreseSpawnRate()
+    {
+        pieceSpawnRate -= .15f;
+        chickSpawnRate -= .5f;
     }
 
     void StartSpawning()
@@ -56,10 +86,10 @@ public class PoolManager : MonoBehaviour
             StartCoroutine(GenerateChicks());
         if (asteroid != null)
             StartCoroutine(GenerateAsteroid());
-        if (GameManager.instance.magnet)
-            StartCoroutine(GenerateMagnet());
-        if (GameManager.instance.shield) 
-            StartCoroutine (GenerateShield());
+        if (GameManager.instance.magnet && GameManager.instance.shield)
+        {
+            StartCoroutine(GeneratePowerPickup());
+        }
     }
 
     void createPoolParents()
@@ -108,22 +138,17 @@ public class PoolManager : MonoBehaviour
         }
     }
 
-    IEnumerator GenerateMagnet()
+    IEnumerator GeneratePowerPickup()
     {
-        while (magnetPause == false)
+        while (powerPause == false)
         {
-            yield return new WaitForSeconds(magnetSpawnRate);
-            poolInstantiateObj(GameManager.instance.magnet, targetSpawnPt.position, Quaternion.identity, ObjType.Asteroid);
-            targetSpawnPt = spawnPts[Random.Range(0, spawnPts.Length)];
-        }
-    }
+            yield return new WaitForSeconds(powerSpawnRate);
+            random = Random.Range(0, 1);
+            if (random == 0)
+                poolInstantiateObj(GameManager.instance.magnet, targetSpawnPt.position, Quaternion.identity, ObjType.Asteroid);
+            else
+                poolInstantiateObj(GameManager.instance.shield, targetSpawnPt.position, Quaternion.identity, ObjType.Asteroid);
 
-    IEnumerator GenerateShield()
-    {
-        while (shieldPause == false)
-        {
-            yield return new WaitForSeconds(shieldSpawnRate);
-            poolInstantiateObj(GameManager.instance.shield, targetSpawnPt.position, Quaternion.identity, ObjType.Asteroid);
             targetSpawnPt = spawnPts[Random.Range(0, spawnPts.Length)];
         }
     }
@@ -132,7 +157,7 @@ public class PoolManager : MonoBehaviour
     {
         if (piece != null)
         {
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 4; i++)
             {
                 poolInstantiateObj(piece,pos, Quaternion.identity, ObjType.Piece);
                 yield return new WaitForSeconds(.1f);

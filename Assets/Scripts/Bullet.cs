@@ -28,6 +28,10 @@ public class Bullet : MonoBehaviour
         isTriggered = false;
     }
 
+    private void Start()
+    {
+        PoolManager.instance.IncreaseSpeed += SpeedIncrease;
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -45,8 +49,12 @@ public class Bullet : MonoBehaviour
 
             if (collision.transform.TryGetComponent<Health>(out health))
             {
-                Debug.Log(collision.transform.name+"  "+this.gameObject.name);
+               // Debug.Log(collision.transform.name+"  "+this.gameObject.name);
                 isTriggered = true;
+                if (bulletOwner == owner.Player)
+                {
+                    AudioManager.instance.PBulletSFxPlay();
+                } 
                 Damage();
                 HitEffect();
             }
@@ -60,6 +68,10 @@ public class Bullet : MonoBehaviour
             transform.Translate(direction * speed * Time.deltaTime);    //   Fire/Move Forwards
             DestroyOnBoundary();
         }
+    }
+    void SpeedIncrease()
+    {
+        initSpeed += 1;
     }
 
     void DestroyOnBoundary()
@@ -88,7 +100,7 @@ public class Bullet : MonoBehaviour
         PoolManager.instance.poolDestroyObj(impactInstance);
         PoolManager.instance.poolDestroyObj(gameObject);
 
-        Debug.Log("Delay");
+        //Debug.Log("Delay");
     }
         
 

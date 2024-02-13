@@ -31,17 +31,24 @@ public class Chicken : MonoBehaviour
             targetDir = Vector2.left;
         }
         targetDir += Vector2.down;
+
+        PoolManager.instance.IncreaseSpeed += SpeedIncrease;
     }
 
     void Update()
     {
-        if (GameManager.instance.gameState == GameState.Running)
+        if (GameManager.instance.gameState == GameState.Running && gameObject.activeSelf)
         {
             targetDir = BoundaryCheck(targetDir);
             transform.Translate(targetDir * speed * Time.deltaTime);
             StartCoroutine(Fire());
         }
         
+    }
+
+    void SpeedIncrease()
+    {
+        speed += .7f;
     }
 
     Vector2 BoundaryCheck(Vector2 dir)
@@ -54,7 +61,6 @@ public class Chicken : MonoBehaviour
 
         if (transform.position.y < -4.5f)
         {
-            Destroy(gameObject);
             PoolManager.instance.poolDestroyObj(this.gameObject);
         }
 
@@ -67,8 +73,8 @@ public class Chicken : MonoBehaviour
         {
             fireDelay = true;
             yield return new WaitForSeconds(fireRate);
-            //Instantiate(gameManager.chickBullet, firePT.position, firePT.rotation);
             PoolManager.instance.poolInstantiateObj(gameManager.chickBullet, firePT.position, firePT.rotation, ObjType.Bullet);
+            AudioManager.instance.EggSFxPlay();
             fireDelay = false;
         }
     }

@@ -23,6 +23,18 @@ public class GameManager : MonoBehaviour
         instance = this;
     }
 
+    public bool IsPowerOn()
+    {
+        if (!magnetOn && !shieldOn)
+        {
+            if (!doubleGunOn)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     public void Die(Transform obj)
     {
@@ -34,7 +46,8 @@ public class GameManager : MonoBehaviour
         }else if (obj.CompareTag("Asteroid"))
         {
             PoolManager.instance.poolInstantiateObj(smokeExplosion,obj.transform.position,obj.transform.rotation, ObjType.VFX);
-            PoolManager.instance.poolInstantiateObj(doubleGun, obj.transform.position,obj.transform.rotation, ObjType.VFX);
+            if(!IsPowerOn())
+                PoolManager.instance.poolInstantiateObj(doubleGun, obj.transform.position,obj.transform.rotation, ObjType.VFX);
             PoolManager.instance.poolDestroyObj(obj.gameObject);
         }
         else if(obj.CompareTag("Chick"))

@@ -23,6 +23,10 @@ public class DoubleGun : MonoBehaviour
         cirCol.enabled = true;
         duration = initDuration;
     }
+    private void Start()
+    {
+        PoolManager.instance.IncreaseSpeed += SpeedIncrease;
+    }
 
     void Update()
     {
@@ -45,12 +49,18 @@ public class DoubleGun : MonoBehaviour
         if (collision.CompareTag("Player") && once == false)
         {
             once = true;
+            AudioManager.instance.PickSFxPlay();
             duration += Time.time;
             GameManager.instance.doubleGunOn = true;
             GameManager.instance.power.SetActive(true);
             spriteRenderer.enabled = false;
             cirCol.enabled = false;
         }
+    }
+
+    void SpeedIncrease()
+    {
+        speed += 1;
     }
 
     void LossPower()

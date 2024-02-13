@@ -24,6 +24,11 @@ public class Shield : MonoBehaviour
         duration = initDuration;
     }
 
+    private void Start()
+    {
+        PoolManager.instance.IncreaseSpeed += SpeedIncrease;
+    }
+
     void Update()
     {
         if (GameManager.instance.gameState != GameState.Running)
@@ -38,6 +43,11 @@ public class Shield : MonoBehaviour
         {
             transform.Translate(Vector3.down * speed * Time.deltaTime);
         }
+
+        if (GameManager.instance.IsPowerOn())
+        {
+            PoolManager.instance.poolDestroyObj(this.gameObject);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -45,12 +55,17 @@ public class Shield : MonoBehaviour
         if (collision.CompareTag("Player") && once == false)
         {
             once = true;
+            AudioManager.instance.PickSFxPlay();
             duration += Time.time;
             GameManager.instance.shieldOn = true;
             GameManager.instance.power.SetActive(true);
             spriteRenderer.enabled = false;
             cirCol.enabled = false;
         }
+    }
+    void SpeedIncrease()
+    {
+        speed += 1;
     }
 
     void LossPower()

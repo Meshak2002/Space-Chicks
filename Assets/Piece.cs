@@ -21,6 +21,11 @@ public class Piece : MonoBehaviour
          speed = initSpeed;
     }
 
+    private void Start()
+    {
+        PoolManager.instance.IncreaseSpeed += SpeedIncrease;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -45,9 +50,15 @@ public class Piece : MonoBehaviour
         }
     }
 
+    void SpeedIncrease()
+    {
+        initSpeed += 1.5f;
+    }
+
     void EatPiece()
     {
         GameManager.instance.piecesCollected++;
+        AudioManager.instance.EatSFxPlay();
         piece.SetActive(false);
         bone.SetActive(true);
         boxCol.enabled = false;

@@ -25,6 +25,11 @@ public class Magnet : MonoBehaviour
         duration = initDuration;
     }
 
+    private void Start()
+    {
+        PoolManager.instance.IncreaseSpeed += SpeedIncrease;
+    }
+
     void Update()
     {
         if (GameManager.instance.gameState != GameState.Running)
@@ -39,6 +44,11 @@ public class Magnet : MonoBehaviour
         {
             transform.Translate(Vector3.down * speed * Time.deltaTime);
         }
+
+        if (GameManager.instance.IsPowerOn())
+        {
+            PoolManager.instance.poolDestroyObj(this.gameObject);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -46,12 +56,18 @@ public class Magnet : MonoBehaviour
         if (collision.CompareTag("Player") && once==false)
         {
             once = true;
+            AudioManager.instance.PickSFxPlay();
             duration += Time.time;
             GameManager.instance.magnetOn = true;
             GameManager.instance.power.SetActive(true);
             spriteRenderer.enabled = false;
             cirCol.enabled = false;
         }
+    }
+
+    void SpeedIncrease()
+    {
+        speed += 1;
     }
 
     void LossPower()

@@ -15,7 +15,7 @@ public class BG_Scroller : MonoBehaviour
 
     void Start()
     {
-        
+        PoolManager.instance.IncreaseSpeed += SpeedIncrease;
     }
 
     void Update()
@@ -27,5 +27,10 @@ public class BG_Scroller : MonoBehaviour
                 rImg.uvRect = new Rect(rImg.uvRect.position + movVelocity * Time.deltaTime, rImg.uvRect.size);
             }
         }
+    }
+
+    void SpeedIncrease()
+    {
+        movVelocity.y += .1f;
     }
 }

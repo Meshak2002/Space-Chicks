@@ -11,6 +11,7 @@ public class Asteroid : MonoBehaviour
     void Start()
     {
         target = GameManager.instance.player.transform.position;
+        PoolManager.instance.IncreaseSpeed += SpeedIncrease;
     }
 
     void Update()
@@ -32,6 +33,11 @@ public class Asteroid : MonoBehaviour
                 }
             }
         }
+    }
+
+    void SpeedIncrease()
+    {
+        speed += 1;
     }
 
     void BoundaryCheck()
