@@ -1523,7 +1523,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 81, y: -33.000305}
+  m_AnchoredPosition: {x: 81, y: -33.00049}
   m_SizeDelta: {x: -980, y: -1820}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &783186902
@@ -1827,7 +1827,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 81, y: -33.000305}
+  m_AnchoredPosition: {x: 81, y: -33.00049}
   m_SizeDelta: {x: -980, y: -1820}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &906179067
@@ -2537,7 +2537,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1536290533}
         m_TargetAssemblyTypeName: UiManager, Assembly-CSharp
-        m_MethodName: Retry
+        m_MethodName: OnRetry
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
