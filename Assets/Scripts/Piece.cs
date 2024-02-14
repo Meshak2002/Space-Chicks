@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Piece : MonoBehaviour
@@ -18,17 +16,18 @@ public class Piece : MonoBehaviour
 
     private void OnEnable()
     {
-         speed = initSpeed;
+        // Reset speed to initial speed when object is enabled
+        speed = initSpeed;
     }
 
     private void Start()
     {
-        PoolManager.instance.IncreaseSpeed += SpeedIncrease;
+        PoolManager.instance.IncreaseSpeed += SpeedIncrease;     // Subscribe to event for speed increase
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player"))             // Check if collided with player 
         {
             EatPiece();
         }
@@ -39,8 +38,9 @@ public class Piece : MonoBehaviour
         if (GameManager.instance.gameState != GameState.Running)
             return;
 
-        BoundaryCheck();
-        if (GameManager.instance.magnetOn && isEaten==false)
+        BoundaryCheck();    // Check if the piece is within the bounds
+
+        if (GameManager.instance.magnetOn && isEaten==false)  // Move the piece towards the player if magnet is active and piece has not been eaten
         {
             transform.position = Vector2.MoveTowards(transform.position, GameManager.instance.player.transform.position , speed * Time.deltaTime);
         }
@@ -76,7 +76,7 @@ public class Piece : MonoBehaviour
 
     void BoundaryCheck()
     {
-        if (transform.position.y < -4.5f)
+        if (transform.position.y < -4.5f)    // Check if the piece's y position is below the lower boundary
         {
             RestorePiece();
             PoolManager.instance.PoolDestroyObj(this.gameObject);

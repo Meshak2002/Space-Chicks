@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +13,7 @@ public class BG_Scroller : MonoBehaviour
 
     void Start()
     {
-        PoolManager.instance.IncreaseSpeed += SpeedIncrease;
+        PoolManager.instance.IncreaseSpeed += SpeedIncrease;        // Subscribe to event for speed increase
     }
 
     void Update()
@@ -23,7 +21,7 @@ public class BG_Scroller : MonoBehaviour
         if (GameManager.instance.gameState == GameState.Running)
         {
             if (rImg != null)
-            {
+            {                        // Update UV offset to create scrolling effect
                 rImg.uvRect = new Rect(rImg.uvRect.position + movVelocity * Time.deltaTime, rImg.uvRect.size);
             }
         }

@@ -1,99 +1,76 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private GameManager gameManager;
     [SerializeField] private  float speed;
     [SerializeField] private float fireRate=1;
     [SerializeField] private bool fireDelay;
     private Vector2 inputMovement;
 
-
-    private void Awake()
-    {
-        
-    }
-
     private void Start()
     {
-        gameManager = GameManager.instance;
-        SwipeControl.OnSwipeInput += Move;
+        SwipeControl.OnSwipeInput += Move;              // Subscribe to SwipeControl swipe input event
     }
 
-    void Update()
-    {
-        if (gameManager != null)
-        {
-            if (gameManager.gameState == GameState.Running)
-            {
-                
-            }
-        }
-    }
 
-    void Move(Vector2 input )
+    void Move(Vector2 input)         // Method to handle player movement based on swipe input
     {
-        inputMovement = input;
-        inputMovement = BoundaryCheck(inputMovement);
-        transform.Translate(inputMovement * speed * Time.deltaTime);
+        inputMovement = input;  
+
+        inputMovement = BoundaryCheck(inputMovement);    // Apply boundary check to the input movement vector
+
+        transform.Translate(inputMovement);    
         if (fireDelay == false)
         {
-            if (GameManager.instance.doubleGunOn)
+            if (GameManager.instance.doubleGunOn)    // Check if double gun power is activated if so double fire, else single Fire.
             {
-                StartCoroutine(Fire(gameManager.playerFirePos.GetChild(0)));
-                StartCoroutine(Fire(gameManager.playerFirePos.GetChild(1)));
+                StartCoroutine(Fire(GameManager.instance.playerFirePos.GetChild(0)));
+                StartCoroutine(Fire(GameManager.instance.playerFirePos.GetChild(1)));
             }
             else
             {
-                StartCoroutine(Fire(gameManager.playerFirePos));
+                StartCoroutine(Fire(GameManager.instance.playerFirePos));
             }
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (gameManager.shieldOn)
+        if (GameManager.instance.shieldOn)      // If shield is active, the collided object will be died
         {
-            gameManager.Die(collision.transform);
+            GameManager.instance.Die(collision.transform);
             return;
         }
         
         if (collision.gameObject.CompareTag("Chick") || collision.gameObject.CompareTag("Asteroid"))
-        {
-            gameManager.Die(transform);
+        {                                               // if the collided object is a Chick or Asteroid , then the player will die
+            GameManager.instance.Die(transform);
         }
     }
 
     Vector2 BoundaryCheck(Vector2 input)
     {
-        if (this.transform.position.x > 2.2f)
-            input.x = input.x > 0 ? 0 : input.x;
+        Vector2 futurePos = (Vector2)transform.position+input*speed*Time.deltaTime;  //Calculate future Position based on the input
+        
+        //Rephrase the values if it crosses the boundary
+        futurePos.x = Mathf.Clamp(futurePos.x,-2.2f, 2.2f);                        
+        futurePos.y = Mathf.Clamp(futurePos.y,-4.5f, 3f);
 
-        if (this.transform.position.x < -2.2f)
-            input.x = input.x > 0 ? input.x : 0;
-
-        if (this.transform.position.y > 3)
-            input.y = input.y > 0 ? 0 : input.y;
-
-        if (this.transform.position.y < -4.5f)
-            input.y = input.y > 0 ? input.y : 0;
-
-        return input;
+        return futurePos-(Vector2)transform.position;   //Return the inputMovement
     }
 
-    IEnumerator Fire(Transform target)
+    IEnumerator Fire(Transform target)       // Coroutine to handle firing
     {      
         fireDelay = true;
         if(PoolManager.instance != null)
-            PoolManager.instance.PoolInstantiateObj(gameManager.playerBullet, target.position, target.rotation, ObjType.Bullet);
+            PoolManager.instance.PoolInstantiateObj(GameManager.instance.playerBullet, target.position, target.rotation, ObjType.Bullet);
         yield return new WaitForSeconds(fireRate);
         fireDelay = false;     
     }
 
     private void OnDestroy()
     {
-        SwipeControl.OnSwipeInput -= Move;
+        SwipeControl.OnSwipeInput -= Move;      // Unsubscribe from SwipeControl swipe input event
     }
 
 

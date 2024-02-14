@@ -1337,7 +1337,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13d020028dfdf814db18d17b17d5d89c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 5
   fireRate: 0.25
   fireDelay: 0
 --- !u!50 &724463503
@@ -1523,7 +1523,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 81, y: -32.999817}
+  m_AnchoredPosition: {x: 81, y: -33.000305}
   m_SizeDelta: {x: -980, y: -1820}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &783186902
@@ -1827,7 +1827,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 81, y: -32.999817}
+  m_AnchoredPosition: {x: 81, y: -33.000305}
   m_SizeDelta: {x: -980, y: -1820}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &906179067
@@ -2723,13 +2723,11 @@ MonoBehaviour:
   piece: {fileID: 305527599139568488, guid: 5f987c130f5822047b8a739888fb4684, type: 3}
   chick: {fileID: 5198129082370295031, guid: bd32c29fcf87297468c3881f37b11a7d, type: 3}
   asteroid: {fileID: 7588541995012774421, guid: e680a9f6d5a5f204fb76570b20bd872a, type: 3}
-  pieceSpawnRate: 0.75
+  pieceSpawnRate: 0.7
   chickSpawnRate: 7
   asterSpawnRate: 15
   powerSpawnRate: 17.25
   poolList: []
-  level: 0
-  random: 0
 --- !u!1 &1383724111
 GameObject:
   m_ObjectHideFlags: 0
@@ -3055,23 +3053,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameState: 2
+  player: {fileID: 724463498}
+  power: {fileID: 1690248731}
+  poolManager: {fileID: 1360511608}
+  bgScroller: {fileID: 1184075082}
+  playerFirePos: {fileID: 1610804450}
+  piecesCollected: 0
   playerBullet: {fileID: 5240780574181937788, guid: 2fdeddbfa8208cf4fb68602f1979d2a7, type: 3}
   chickBullet: {fileID: 8196076783444598507, guid: 40c7e233ec4d3de468a49f91ebf68853, type: 3}
   playerExplosion: {fileID: 417761080263594737, guid: 7800b8f6b712bfe49bd663eeb3ebe1e4, type: 3}
   smokeExplosion: {fileID: 3266281001430186455, guid: ef4d07350976ae1478e20ecbafc5e9be, type: 3}
   chickExplosion: {fileID: 3548588485384254792, guid: 2f9e7dc163581394da1e00b561eed65d, type: 3}
-  player: {fileID: 724463498}
   magnet: {fileID: 6831781962802615949, guid: b961433ccb337ef4a9d5fdeabdcd3877, type: 3}
   shield: {fileID: 3361440920880132575, guid: e4c17a5dd16e66f4ea202feb624112c0, type: 3}
   doubleGun: {fileID: 8702921375374715729, guid: ab6c33fc28b57654ea70ccbc9778de66, type: 3}
-  power: {fileID: 1690248731}
-  poolManager: {fileID: 1360511608}
-  bgScroller: {fileID: 1184075082}
   magnetOn: 0
   shieldOn: 0
   doubleGunOn: 0
-  playerFirePos: {fileID: 1610804450}
-  piecesCollected: 0
 --- !u!4 &1477557811
 Transform:
   m_ObjectHideFlags: 0

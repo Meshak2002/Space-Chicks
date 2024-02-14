@@ -81,7 +81,7 @@ public class PoolManager : MonoBehaviour
     void IncreaseSpawnRate()
     {
         pieceSpawnRate -= 0.15f;
-        chickSpawnRate -= 0.5f;
+        chickSpawnRate -= 0.6f;
     }
 
     // Start spawning objects

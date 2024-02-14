@@ -8,12 +8,13 @@ public class Bullet : MonoBehaviour
     [SerializeField] private int hitPower = 1;
     [SerializeField] private Vector2 direction = Vector2.right;
     [SerializeField] private GameObject impactFX;
+    [SerializeField] private owner bulletOwner;
+
     private bool isTriggered;
+    private float initSpeed;
     private Health health;
     private SpriteRenderer spriteRenderer;
-    [SerializeField]private GameObject impactInstance;
-    private float initSpeed;
-    public owner bulletOwner;
+    private GameObject impactInstance;
 
     private void Awake()
     {
@@ -23,6 +24,7 @@ public class Bullet : MonoBehaviour
 
     private void OnEnable()
     {
+        // Reset properties
         spriteRenderer.enabled = enabled;
         speed = initSpeed;
         isTriggered = false;
@@ -30,51 +32,55 @@ public class Bullet : MonoBehaviour
 
     private void Start()
     {
+        // Subscribe to event for speed increase
         PoolManager.instance.IncreaseSpeed += SpeedIncrease;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag!=bulletOwner.ToString() && isTriggered == false)
+        // Check if collision is not with the bullet owner and if the bullet is not already triggered
+        if (collision.tag != bulletOwner.ToString() && !isTriggered)
         {
-          
-
-            if (collision.gameObject.CompareTag("Player") && GameManager.instance.shieldOn)
+            // Check if collision is with a player and the shield is active
+            if (collision.CompareTag("Player") && GameManager.instance.shieldOn)
             {
                 isTriggered = true;
                 HitEffect();
-                Debug.Log("Pealthh");
                 return;
             }
 
-            if (collision.transform.TryGetComponent<Health>(out health))
+            // Check if collision object has Health component
+            if (collision.TryGetComponent<Health>(out health))
             {
-               // Debug.Log(collision.transform.name+"  "+this.gameObject.name);
                 isTriggered = true;
                 if (bulletOwner == owner.Player)
                 {
                     AudioManager.instance.PBulletSFxPlay();
-                } 
+                }
+                // Deal damage and trigger hit effect
                 Damage();
                 HitEffect();
             }
         }
     }
 
-    void Update()
+    private void Update()
     {
+        // Move the bullet forward
         if (GameManager.instance.gameState == GameState.Running)
         {
-            transform.Translate(direction * speed * Time.deltaTime);    //   Fire/Move Forwards
+            transform.Translate(direction * speed * Time.deltaTime);
             DestroyOnBoundary();
         }
     }
-    void SpeedIncrease()
+
+    private void SpeedIncrease()
     {
         initSpeed += 1;
     }
 
-    void DestroyOnBoundary()
+    // Method to destroy bullet when it goes out of bounds
+    private void DestroyOnBoundary()
     {
         if (transform.position.y > 6 || transform.position.y < -6)
         {
@@ -82,30 +88,31 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    void Damage() {
+    // Method to deal damage to the health component
+    private void Damage()
+    {
         health.TakeDamage(hitPower);
     }
 
-    void HitEffect()
+    // Method to trigger hit effect and destroy the bullet
+    private void HitEffect()
     {
         impactInstance = PoolManager.instance.PoolInstantiateObj(impactFX, transform.position, transform.rotation, ObjType.VFX);
         speed = 0;
         spriteRenderer.enabled = false;
-        StartCoroutine(Delay(.4f));
+        StartCoroutine(Delay(0.4f));
     }
 
-    IEnumerator Delay(float delay)
+    // Coroutine to delay destroying impact visual effect and bullet
+    private IEnumerator Delay(float delay)
     {
         yield return new WaitForSeconds(delay);
         PoolManager.instance.PoolDestroyObj(impactInstance);
         PoolManager.instance.PoolDestroyObj(gameObject);
-
-        //Debug.Log("Delay");
     }
-        
-
 }
 
+// Enumeration for bullet owner
 public enum owner
 {
     Chick,

@@ -15,7 +15,7 @@ public class ParticleDestroyer : MonoBehaviour
     {
         if(ps != null)
         {
-            delay = ps.startLifetime + ps.duration;
+            delay = ps.startLifetime + ps.duration;     // Calculate delay based on particle system's start lifetime and duration
             StartCoroutine(wait(delay));
         }
     }
@@ -23,7 +23,7 @@ public class ParticleDestroyer : MonoBehaviour
     IEnumerator wait(float delay)
     {
         yield return new WaitForSeconds(delay);
-        PoolManager.instance.PoolDestroyObj(this.gameObject);
+        PoolManager.instance.PoolDestroyObj(this.gameObject);        // Coroutine to wait for a specified delay before destroying the object
     }
 
 }
