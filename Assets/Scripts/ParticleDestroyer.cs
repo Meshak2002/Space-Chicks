@@ -23,7 +23,7 @@ public class ParticleDestroyer : MonoBehaviour
     IEnumerator wait(float delay)
     {
         yield return new WaitForSeconds(delay);
-        PoolManager.instance.poolDestroyObj(this.gameObject);
+        PoolManager.instance.PoolDestroyObj(this.gameObject);
     }
 
 }

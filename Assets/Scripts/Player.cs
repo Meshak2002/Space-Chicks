@@ -86,7 +86,7 @@ public class Player : MonoBehaviour
     {      
         fireDelay = true;
         if(PoolManager.instance != null)
-            PoolManager.instance.poolInstantiateObj(gameManager.playerBullet, target.position, target.rotation, ObjType.Bullet);
+            PoolManager.instance.PoolInstantiateObj(gameManager.playerBullet, target.position, target.rotation, ObjType.Bullet);
         yield return new WaitForSeconds(fireRate);
         fireDelay = false;     
     }

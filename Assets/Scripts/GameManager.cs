@@ -40,21 +40,21 @@ public class GameManager : MonoBehaviour
     {
         if (obj.CompareTag("Player"))
         {
-            PoolManager.instance.poolInstantiateObj(playerExplosion, obj.transform.position, obj.transform.rotation);
+            PoolManager.instance.PoolInstantiateObj(playerExplosion, obj.transform.position, obj.transform.rotation, ObjType.VFX);
             Destroy(obj.gameObject);
             EndGame();
         }else if (obj.CompareTag("Asteroid"))
         {
-            PoolManager.instance.poolInstantiateObj(smokeExplosion,obj.transform.position,obj.transform.rotation, ObjType.VFX);
+            PoolManager.instance.PoolInstantiateObj(smokeExplosion,obj.transform.position,obj.transform.rotation, ObjType.VFX);
             if(!IsPowerOn())
-                PoolManager.instance.poolInstantiateObj(doubleGun, obj.transform.position,obj.transform.rotation, ObjType.VFX);
-            PoolManager.instance.poolDestroyObj(obj.gameObject);
+                PoolManager.instance.PoolInstantiateObj(doubleGun, obj.transform.position,obj.transform.rotation, ObjType.VFX);
+            PoolManager.instance.PoolDestroyObj(obj.gameObject);
         }
         else if(obj.CompareTag("Chick"))
         {
-            PoolManager.instance.poolInstantiateObj(chickExplosion, obj.transform.position, obj.transform.rotation, ObjType.VFX);
+            PoolManager.instance.PoolInstantiateObj(chickExplosion, obj.transform.position, obj.transform.rotation, ObjType.VFX);
             Vector2 chickPos = obj.position;
-            PoolManager.instance.poolDestroyObj(obj.gameObject);
+            PoolManager.instance.PoolDestroyObj(obj.gameObject);
             if (PoolManager.instance!=null)
             {
                 StartCoroutine(PoolManager.instance.Reward(chickPos));

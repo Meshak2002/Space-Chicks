@@ -61,7 +61,7 @@ public class Chicken : MonoBehaviour
 
         if (transform.position.y < -4.5f)
         {
-            PoolManager.instance.poolDestroyObj(this.gameObject);
+            PoolManager.instance.PoolDestroyObj(this.gameObject);
         }
 
         return dir;
@@ -73,7 +73,7 @@ public class Chicken : MonoBehaviour
         {
             fireDelay = true;
             yield return new WaitForSeconds(fireRate);
-            PoolManager.instance.poolInstantiateObj(gameManager.chickBullet, firePT.position, firePT.rotation, ObjType.Bullet);
+            PoolManager.instance.PoolInstantiateObj(gameManager.chickBullet, firePT.position, firePT.rotation, ObjType.Bullet);
             AudioManager.instance.EggSFxPlay();
             fireDelay = false;
         }

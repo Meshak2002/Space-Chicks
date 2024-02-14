@@ -74,7 +74,7 @@ public class DoubleGun : MonoBehaviour
         GameManager.instance.doubleGunOn = false;
         once = false;
         GameManager.instance.power.SetActive(false);
-        PoolManager.instance.poolDestroyObj(this.gameObject);
+        PoolManager.instance.PoolDestroyObj(this.gameObject);
     }
 
 }

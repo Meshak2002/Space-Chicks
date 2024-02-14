@@ -44,7 +44,7 @@ public class Asteroid : MonoBehaviour
     {
         if (transform.position.y < -4.5f)
         {
-            PoolManager.instance.poolDestroyObj(this.gameObject);
+            PoolManager.instance.PoolDestroyObj(this.gameObject);
         }
     }
 }

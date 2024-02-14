@@ -46,7 +46,7 @@ public class Shield : MonoBehaviour
 
         if (GameManager.instance.IsPowerOn())       // Check if other power is active; if so, destroy the shield
         {
-            PoolManager.instance.poolDestroyObj(this.gameObject);
+            PoolManager.instance.PoolDestroyObj(this.gameObject);
         }
     }
 
@@ -79,6 +79,6 @@ public class Shield : MonoBehaviour
         once = false;
         GameManager.instance.shieldOn = false;
         GameManager.instance.power.SetActive(false);
-        PoolManager.instance.poolDestroyObj(this.gameObject);
+        PoolManager.instance.PoolDestroyObj(this.gameObject);
     }
 }

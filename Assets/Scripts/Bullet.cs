@@ -78,7 +78,7 @@ public class Bullet : MonoBehaviour
     {
         if (transform.position.y > 6 || transform.position.y < -6)
         {
-            PoolManager.instance.poolDestroyObj(gameObject);
+            PoolManager.instance.PoolDestroyObj(gameObject);
         }
     }
 
@@ -88,7 +88,7 @@ public class Bullet : MonoBehaviour
 
     void HitEffect()
     {
-        impactInstance = PoolManager.instance.poolInstantiateObj(impactFX, transform.position, transform.rotation, ObjType.VFX);
+        impactInstance = PoolManager.instance.PoolInstantiateObj(impactFX, transform.position, transform.rotation, ObjType.VFX);
         speed = 0;
         spriteRenderer.enabled = false;
         StartCoroutine(Delay(.4f));
@@ -97,8 +97,8 @@ public class Bullet : MonoBehaviour
     IEnumerator Delay(float delay)
     {
         yield return new WaitForSeconds(delay);
-        PoolManager.instance.poolDestroyObj(impactInstance);
-        PoolManager.instance.poolDestroyObj(gameObject);
+        PoolManager.instance.PoolDestroyObj(impactInstance);
+        PoolManager.instance.PoolDestroyObj(gameObject);
 
         //Debug.Log("Delay");
     }
