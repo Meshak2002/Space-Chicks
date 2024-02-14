@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     public GameState gameState = GameState.Running;
     public GameObject playerBullet, chickBullet, playerExplosion, smokeExplosion , chickExplosion, player;
     public GameObject magnet, shield, doubleGun;
-    public GameObject power;
+    public GameObject power, poolManager, bgScroller;
     public bool magnetOn, shieldOn, doubleGunOn;
     public Transform playerFirePos;
     public int piecesCollected;

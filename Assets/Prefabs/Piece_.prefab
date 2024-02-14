@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06c82b684216d7247b93ebd7ab5077fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
+  speed: 4
   bone: {fileID: 8314394195657759127}
   piece: {fileID: 1579842730191559402}
 --- !u!61 &9032107394727322044
