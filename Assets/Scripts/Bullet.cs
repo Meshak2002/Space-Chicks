@@ -82,7 +82,7 @@ public class Bullet : MonoBehaviour
     // Method to destroy bullet when it goes out of bounds
     private void DestroyOnBoundary()
     {
-        if (transform.position.y > 6 || transform.position.y < -6)
+        if (transform.position.y > 5 || transform.position.y < -6)
         {
             PoolManager.instance.PoolDestroyObj(gameObject);
         }
