@@ -1,23 +1,20 @@
 using UnityEngine;
 
-public class Shield : MonoBehaviour
+public class Shield : SpecialPower
 {
-    private bool once;
-    private float timer, initDuration;
     [SerializeField] private float duration, speed;
-    private CircleCollider2D cirCol;
-    private SpriteRenderer spriteRenderer;
+    private float initDuration;
 
     private void Awake()
     {
+        initDuration = duration;
         cirCol = GetComponent<CircleCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        initDuration = duration;
     }
 
     private void OnEnable()
     {
-        // Reset shield state when enabled
+        // Reset doubleGun state when enabled
         spriteRenderer.enabled = true;
         cirCol.enabled = true;
         duration = initDuration;
@@ -33,20 +30,14 @@ public class Shield : MonoBehaviour
         if (GameManager.instance.gameState != GameState.Running)
             return;
 
-        if (once)          // If the shield power is activated, count down its duration
+        if (once)           // If the doubleGun power is activated, count down its duration
         {
             timer = duration - Time.time;
-            if (timer <= 0) LossPower();
+            if (timer <= 0) LossPower(ref GameManager.instance.shieldOn, ref GameManager.instance.shield);
         }
         else               // If not, move it downward
-        {                   
-            transform.Translate(Vector3.down * speed * Time.deltaTime);
-        }
-
-
-        if (GameManager.instance.IsPowerOn())       // Check if other power is active; if so, destroy the shield
         {
-            PoolManager.instance.PoolDestroyObj(this.gameObject);
+            transform.Translate(Vector3.down * speed * Time.deltaTime);
         }
     }
 
@@ -54,19 +45,8 @@ public class Shield : MonoBehaviour
     {
         if (collision.CompareTag("Player") && once == false)        // Check if collided with player 
         {
-            ActivatePower();
+            ActivatePower(ref GameManager.instance.shieldOn, ref GameManager.instance.shield, ref duration);
         }
-    }
-
-    void ActivatePower()
-    {
-        once = true;
-        AudioManager.instance.PickSFxPlay();
-        duration += Time.time;
-        GameManager.instance.shieldOn = true;
-        GameManager.instance.power.SetActive(true);
-        spriteRenderer.enabled = false;
-        cirCol.enabled = false;
     }
 
     void SpeedIncrease()
@@ -74,11 +54,5 @@ public class Shield : MonoBehaviour
         speed += 1;
     }
 
-    void LossPower()                //Called this after the duration of power of shield is finished
-    {
-        once = false;
-        GameManager.instance.shieldOn = false;
-        GameManager.instance.power.SetActive(false);
-        PoolManager.instance.PoolDestroyObj(this.gameObject);
-    }
+
 }
