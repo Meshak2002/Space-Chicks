@@ -140,9 +140,9 @@ public class PoolManager : MonoBehaviour
         while (!spawnPause)
         {
             yield return new WaitForSeconds(powerSpawnRate);
-            random = Random.Range(0, 1);
-            GameObject objToInstantiate = random == 0 ? GameManager.instance.magnet : GameManager.instance.shield;
-            PoolInstantiateObj(objToInstantiate, targetSpawnPt.position, Quaternion.identity, ObjType.Asteroid);
+            random = Random.Range(0, 2);
+            GameObject objToInstantiate = (random == 0) ? GameManager.instance.magnet : GameManager.instance.shield;
+            PoolInstantiateObj(objToInstantiate, targetSpawnPt.position, Quaternion.identity, ObjType.Powers);
             targetSpawnPt = spawnPts[Random.Range(0, spawnPts.Length)];
         }
     }
@@ -195,7 +195,7 @@ public class PoolManager : MonoBehaviour
         GameObject asteroidPool = new GameObject("Asteroid Pool");
         GameObject piecePool = new GameObject("Piece Pool");
         GameObject vfxPool = new GameObject("VFX Pool");
-        GameObject unknownPool = new GameObject("Unknown Pool");
+        GameObject unknownPool = new GameObject("Powers Pool");
 
         bulletPool.transform.parent = poolObjects.transform;
         chickPool.transform.parent = poolObjects.transform;
@@ -214,7 +214,7 @@ public class PoolManager : MonoBehaviour
     }
 
     // Instantiate object from pool
-    public GameObject PoolInstantiateObj(GameObject gObject, Vector2 position, Quaternion rotation, ObjType type = ObjType.Default)
+    public GameObject PoolInstantiateObj(GameObject gObject, Vector2 position, Quaternion rotation, ObjType type = ObjType.Powers)
     {
         GameObject newObj;
         foreach (PoolObject p in poolList)
@@ -278,5 +278,5 @@ public enum ObjType
     Chick,
     Piece,
     Asteroid,
-    Default
+    Powers
 }

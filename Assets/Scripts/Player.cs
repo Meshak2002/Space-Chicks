@@ -42,7 +42,7 @@ public class Player : MonoBehaviour
             return;
         }
         
-        if (collision.gameObject.CompareTag("Chick") || collision.gameObject.CompareTag("Asteroid"))
+        if (collision.gameObject.layer==LayerMask.NameToLayer("Obstacles"))
         {                                               // if the collided object is a Chick or Asteroid , then the player will die
             GameManager.instance.Die(transform);
         }

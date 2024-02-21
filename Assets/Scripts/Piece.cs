@@ -27,7 +27,7 @@ public class Piece : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))             // Check if collided with player 
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))             // Check if collided with player 
         {
             EatPiece();
         }

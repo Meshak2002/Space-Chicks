@@ -42,7 +42,7 @@ public class Bullet : MonoBehaviour
         if (collision.tag != bulletOwner.ToString() && !isTriggered)
         {
             // Check if collision is with a player and the shield is active
-            if (collision.CompareTag("Player") && GameManager.instance.shieldOn)
+            if (collision.gameObject.layer == LayerMask.NameToLayer("Player") && GameManager.instance.shieldOn)
             {
                 isTriggered = true;
                 HitEffect();

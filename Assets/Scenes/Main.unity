@@ -571,7 +571,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 386773830}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LftPt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1323,7 +1323,7 @@ GameObject:
   - component: {fileID: 724463504}
   - component: {fileID: 724463506}
   - component: {fileID: 724463505}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1786,6 +1786,10 @@ PrefabInstance:
       value: Power
       objectReference: {fileID: 0}
     - target: {fileID: 1590415177872986601, guid: acdb90624a404aa438447006f1026065, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1590415177872986601, guid: acdb90624a404aa438447006f1026065, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -1845,6 +1849,14 @@ PrefabInstance:
       propertyPath: m_Materials.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3550968669729317587, guid: acdb90624a404aa438447006f1026065, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4410310426095441352, guid: acdb90624a404aa438447006f1026065, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 6890765397544793498, guid: acdb90624a404aa438447006f1026065, type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
@@ -1852,6 +1864,10 @@ PrefabInstance:
     - target: {fileID: 7710086954383210093, guid: acdb90624a404aa438447006f1026065, type: 3}
       propertyPath: m_Intensity
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8773184688824279198, guid: acdb90624a404aa438447006f1026065, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8986935675043883179, guid: acdb90624a404aa438447006f1026065, type: 3}
       propertyPath: m_Materials.Array.size
@@ -2084,7 +2100,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 924193975}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RtPt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3360,9 +3376,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5367161886417688735, guid: f1c43f438da4ce34c8759e31c366f0d9, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5651996951790773341, guid: f1c43f438da4ce34c8759e31c366f0d9, type: 3}
       propertyPath: m_Name
       value: EngineFx
+      objectReference: {fileID: 0}
+    - target: {fileID: 5651996951790773341, guid: f1c43f438da4ce34c8759e31c366f0d9, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5651996951790773341, guid: f1c43f438da4ce34c8759e31c366f0d9, type: 3}
       propertyPath: m_IsActive
@@ -3399,6 +3423,10 @@ PrefabInstance:
     - target: {fileID: 7483451082902991060, guid: f1c43f438da4ce34c8759e31c366f0d9, type: 3}
       propertyPath: InitialModule.startColor.maxColor.r
       value: 0.088679194
+      objectReference: {fileID: 0}
+    - target: {fileID: 7813815788603493250, guid: f1c43f438da4ce34c8759e31c366f0d9, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3958,7 +3986,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1610804450}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FirePt
   m_TagString: Untagged
   m_Icon: {fileID: 0}

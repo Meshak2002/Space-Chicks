@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6458192932905994322}
   - component: {fileID: 594565231322967216}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: wing (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 5985422977413104986}
   - component: {fileID: 7378241466908331331}
   - component: {fileID: 2541471642816383292}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Chick_Enemy
   m_TagString: Chick
   m_Icon: {fileID: 0}
@@ -275,7 +275,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6025569745300986747}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CFirePt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -307,7 +307,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2386098398969876971}
   - component: {fileID: 6595829351160294627}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: 'LWIng '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -361,7 +361,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3253633838331745519}
   - component: {fileID: 5064458594500227221}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RWIng
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -415,7 +415,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9143109335213743490}
   - component: {fileID: 4927781933336716602}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: wing (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -33,19 +33,20 @@ public class Shield : SpecialPower
         if (once)           // If the doubleGun power is activated, count down its duration
         {
             timer = duration - Time.time;
-            if (timer <= 0) LossPower(ref GameManager.instance.shieldOn, ref GameManager.instance.shield);
+            if (timer <= 0) LossPower(ref GameManager.instance.shieldOn);
         }
         else               // If not, move it downward
         {
+            BoundaryCheck();
             transform.Translate(Vector3.down * speed * Time.deltaTime);
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && once == false)        // Check if collided with player 
+        if (collision.gameObject.layer==LayerMask.NameToLayer("Player") && once == false)        // Check if collided with player 
         {
-            ActivatePower(ref GameManager.instance.shieldOn, ref GameManager.instance.shield, ref duration);
+            ActivatePower(ref GameManager.instance.shieldOn, ref duration);
         }
     }
 
